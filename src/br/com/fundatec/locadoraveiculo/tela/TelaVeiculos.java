@@ -49,14 +49,11 @@ public class TelaVeiculos {
 
     private void cadastrarVeiculo() {
         System.out.println("Digite a placa:");
-        String placa = in.next();
-        placa =this.lerString();
+        String placa =this.lerString();
         System.out.println("Digite a marca:");
-        String marca = in.next();
-        marca =this.lerString();
+        String marca =this.lerString();
         System.out.println("Digite o modelo:");
-        String modelo = in.next();
-        modelo =this.lerString();
+        String modelo =this.lerString();
         System.out.println("Informe o Tipo de veículo. Digite uma das opções: HATCH, SEDAN, SUV, PICKUP");
         TipoVeiculo tipoVeiculo = this.lerTipoVeiculo();
         System.out.println("Digite a kilometragem:");
@@ -109,7 +106,7 @@ public class TelaVeiculos {
     private String lerString(){
         while (true) {
             try {
-                return in.nextLine();
+                return in.next();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
                 System.out.println("!!!Digite uma opção válida!!!");

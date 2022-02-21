@@ -10,10 +10,10 @@ import br.com.fundatec.locadoraveiculo.model.*;
 public class TelaLocacoes {
     private Scanner in = new Scanner(System.in);
     private ListaVeiculos listaVeiculos = ListaVeiculos.criar();
-    //private ListaClientes listaClientes = ListaClientes.criar();
+    // private ListaClientes listaClientes = ListaClientes.criar();
 
     public void ImprimirTelaLocacoes() {
-        //ListaLocacoes listaLocacao = ListaLocacoes.criar();
+        // ListaLocacoes listaLocacao = ListaLocacoes.criar();
         while (true) {
             int opcao = 0;
             System.out.println("|---------Qual tela gostaria de ir---------|");
@@ -45,7 +45,7 @@ public class TelaLocacoes {
         }
     }
 
-    private Locacao cadastrarLocacao() {        
+    private Locacao cadastrarLocacao() {
         Veiculo veiculos = selecionarVeiculo();
         Cliente clientes = selecionarCliente();
         System.out.println("Informe a data de locação. (YYYY-MM-DD)");
@@ -78,9 +78,9 @@ public class TelaLocacoes {
             }
         }
         System.out.println("Selecione um veículo.");
-        int veiculoSelecionado = in.nextInt();
-        listaVeiculos.getVeiculoId(veiculoSelecionado);
-        return veiculos.get(veiculoSelecionado);
+        int veiculo = in.nextInt();
+        listaVeiculos.getVeiculoId(veiculo);
+        return veiculos.get(veiculo);
     }
 
     private Cliente selecionarCliente() {
@@ -91,7 +91,8 @@ public class TelaLocacoes {
         } else {
             String linha = "%-4s %-7s %-10s %-10s %-6s %-8s %-6s %-6s";
             System.out.println(
-                    String.format(linha, "Num", "Nome", "Tipo Documento", "Número documento", "CNPJ", "Razão Social", "Endereço"));
+                    String.format(linha, "Num", "Nome", "Tipo Documento", "Número documento", "CNPJ", "Razão Social",
+                            "Endereço"));
             for (int i = 1; i <= clientes.size(); i++) {
                 Cliente cliente = clientes.get(i - 1);
                 System.out.println(String.format(linha,

@@ -85,7 +85,7 @@ public class TelaClientes {
             System.out.println("Informe o Endereço.");
             String logradouro = in.nextLine();
             System.out.println("Informe o numero.");
-            int numero = in.nextInt();
+            int numero = this.lerInt();
             in.nextLine();
             System.out.println("Informe o complemento.");
             String complemento = in.nextLine();
@@ -163,6 +163,16 @@ public class TelaClientes {
         while (true) {
             try {
                 return in.nextLong();
+            } catch (IllegalArgumentException excecao) {
+                in.nextLine();
+                System.out.println("!!!Digite uma valor válido!!!");
+            }
+        }
+    }
+    private int lerInt() {
+        while (true) {
+            try {
+                return in.nextInt();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
                 System.out.println("!!!Digite uma valor válido!!!");

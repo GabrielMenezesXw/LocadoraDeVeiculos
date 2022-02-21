@@ -1,4 +1,5 @@
 package br.com.fundatec.locadoraveiculo.bancodedados;
-public class Excecoes {
-  
+
+public abstract class Excecoes {
+
 }
