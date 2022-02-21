@@ -10,10 +10,10 @@ import br.com.fundatec.locadoraveiculo.model.*;
 public class TelaLocacoes {
     private Scanner in = new Scanner(System.in);
     private ListaVeiculos listaVeiculos = ListaVeiculos.criar();
-    private ListaClientes listaClientes = ListaClientes.criar();
+    //private ListaClientes listaClientes = ListaClientes.criar();
 
     public void ImprimirTelaLocacoes() {
-        ListaLocacoes listaLocacao = ListaLocacoes.criar();
+        //ListaLocacoes listaLocacao = ListaLocacoes.criar();
         while (true) {
             int opcao = 0;
             System.out.println("|---------Qual tela gostaria de ir---------|");

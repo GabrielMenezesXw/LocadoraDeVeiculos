@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.List;
 import br.com.fundatec.locadoraveiculo.model.Veiculo;
 import br.com.fundatec.locadoraveiculo.enums.TipoVeiculo;
-import br.com.fundatec.locadoraveiculo.bancodedados.ListaVeiculos;
+import br.com.fundatec.locadoraveiculo.bancodedados.*;
 
 public class TelaVeiculos {
     private ListaVeiculos listaVeiculos = ListaVeiculos.criar();
@@ -49,13 +49,16 @@ public class TelaVeiculos {
 
     private void cadastrarVeiculo() {
         System.out.println("Digite a placa:");
-        String placa =this.lerString();
+        String placa = in.next();
+        placa =this.lerString();
         System.out.println("Digite a marca:");
-        String marca =this.lerString();
+        String marca = in.next();
+        marca =this.lerString();
         System.out.println("Digite o modelo:");
-        String modelo =this.lerString();
+        String modelo = in.next();
+        modelo =this.lerString();
         System.out.println("Informe o Tipo de veículo. Digite uma das opções: HATCH, SEDAN, SUV, PICKUP");
-        TipoVeiculo tipo = this.lerTipoVeiculo();
+        TipoVeiculo tipoVeiculo = this.lerTipoVeiculo();
         System.out.println("Digite a kilometragem:");
         float kilometragem = this.lerFloat();
         in.nextLine();
@@ -63,7 +66,7 @@ public class TelaVeiculos {
         double valorKmRodado = this.lerDouble();
         System.out.println("Digite o valor da diária:");
         double valorDiaria = this.lerDouble();
-        Veiculo veiculo = new Veiculo(placa, marca, modelo, tipo, kilometragem, valorKmRodado, valorDiaria);
+        Veiculo veiculo = new Veiculo(placa, marca, modelo, tipoVeiculo, kilometragem, valorKmRodado, valorDiaria);
         listaVeiculos.adicionar(veiculo);
     }
 
@@ -80,19 +83,19 @@ public class TelaVeiculos {
         }
     }
 
-    public TipoVeiculo lerTipoVeiculo() {
+    private TipoVeiculo lerTipoVeiculo() {
         while (true) {
             try {
-                String tipo = in.next();
-                return TipoVeiculo.valueOf(tipo.toUpperCase());
+                 String tipoVeiculo = in.next();
+                return TipoVeiculo.valueOf(tipoVeiculo.toUpperCase());
             } catch (IllegalArgumentException excecao) {
                 System.out.println(
                         "!!!Tipo de veículo inválido. Digite uma das opções válidas. (HATCH, SEDAN, SUV, PICKUP)!!!");
             }
         }
-    }
+    }  
 
-    public double lerDouble() {
+    private double lerDouble() {
         while (true) {
             try {
                 return in.nextDouble();
@@ -103,7 +106,7 @@ public class TelaVeiculos {
         }
     }
 
-    public String lerString(){
+    private String lerString(){
         while (true) {
             try {
                 return in.nextLine();
@@ -113,7 +116,7 @@ public class TelaVeiculos {
             }
         }
     }
-    public float lerFloat(){
+    private float lerFloat(){
         while (true) {
             try {
                 return in.nextFloat();
@@ -122,5 +125,7 @@ public class TelaVeiculos {
                 System.out.println("!!!Digite uma valor válido!!!");
             }
         }
-    }
+    }    
 }
+
+   

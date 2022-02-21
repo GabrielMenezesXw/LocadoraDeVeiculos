@@ -3,7 +3,7 @@ package br.com.fundatec.locadoraveiculo.tela;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import br.com.fundatec.locadoraveiculo.bancodedados.ListaClientes;
+import br.com.fundatec.locadoraveiculo.bancodedados.*;
 import br.com.fundatec.locadoraveiculo.model.Cliente;
 import br.com.fundatec.locadoraveiculo.model.Endereco;
 import br.com.fundatec.locadoraveiculo.enums.TipoDocumento;
@@ -48,45 +48,39 @@ public class TelaClientes {
     }
 
     private void cadastrarCliente() {
-        long cnpj = 0;
-        String razaoSocial = "NÃO UTILIZADO";
+        String razaoSocial = "null";
+        String nome = "null";
         long documento = 0;
-        String nome = "NÃO UTILIZADO";
-        TipoDocumento tipoDocumento = TipoDocumento.valueOf("CPF");
-
+        long cnpj = 0;
         System.out.println("Informe o tipo do cliente. Digite uma das opções: FISICA/JURIDICA");
-        TipoPessoa tipoPessoa = TipoPessoa.valueOf(in.next().toUpperCase());
-        // try {
-        // tipoPessoa = TipoPessoa.valueOf(in.next().toUpperCase());
-        // } catch (IllegalArgumentException excecao) {
-        // in.nextLine();
-        // System.out.println("Opção inválida, tente novamente.");
-        // System.out.println("Informe o tipo do cliente. FISICA/JURIDICA");
-        // tipoPessoa = TipoPessoa.valueOf(in.next().toUpperCase());
-        // } --- NÃO CONSEGUI FAZER FUNCIONAR ESSA EXCEÇÃO
+        TipoPessoa tipoPessoa = this.lerTipoPessoa();
         if (tipoPessoa.equals(TipoPessoa.JURIDICA)) {
             System.out.println("Informe o CNPJ");
-            cnpj = in.nextLong();
+            cnpj = this.lerLong();
             in.nextLine();
             System.out.println("Informe a razão Social");
-            razaoSocial = in.next();
+            razaoSocial = this.lerString();
         } else if (tipoPessoa.equals(TipoPessoa.FISICA)) {
-            System.out.println("Informe o tipo de documento que deseja informar. Digite uma das opções: CPF/RG");
-            tipoDocumento = TipoDocumento.valueOf(in.next().toUpperCase());
+            System.out.println("Informe o tipo de documento que deseja informar. Digite uma das opções: CPF/RG/CNH");
+            TipoDocumento tipoDocumento = this.lerTipoDocumento();
             if (tipoDocumento.equals(TipoDocumento.CPF)) {
                 System.out.println("Informe o CPF");
-                documento = in.nextLong();
-                in.nextLine();
-            } else if (tipoDocumento.equals(TipoDocumento.RG)) {
-                System.out.println("Informe o RG");
-                documento = in.nextLong();
-                in.nextLine();
-            } else if (tipoDocumento.equals(TipoDocumento.CNH)) {
-                System.out.println("Informe o CNH");
-                documento = in.nextLong();
+                documento = this.lerLong();
                 in.nextLine();
                 System.out.println("Informe o nome");
-                nome = in.nextLine();
+                nome = this.lerString();
+            } else if (tipoDocumento.equals(TipoDocumento.RG)) {
+                System.out.println("Informe o RG");
+                documento = this.lerLong();
+                in.nextLine();
+                System.out.println("Informe o nome");
+                nome = this.lerString();
+            } else if (tipoDocumento.equals(TipoDocumento.CNH)) {
+                System.out.println("Informe o CNH");
+                documento = this.lerLong();
+                in.nextLine();
+                System.out.println("Informe o nome");
+                nome = this.lerString();
             }
             System.out.println("Informe o Endereço.");
             String logradouro = in.nextLine();
@@ -126,6 +120,52 @@ public class TelaClientes {
             for (int i = 1; i <= clientes.size(); i++) {
                 Cliente cliente = clientes.get(i - 1);
                 System.out.println(String.format("(%s) %s", i, cliente));
+            }
+        }
+    }
+
+    private TipoPessoa lerTipoPessoa() {
+        while (true) {
+            try {
+                String tipoPessoa = in.next();
+                return TipoPessoa.valueOf(tipoPessoa.toUpperCase());
+            } catch (IllegalArgumentException excecao) {
+                System.out.println(
+                        "!!!Tipo de veículo inválido. Digite uma das opções válidas. (FISICA, JURIDICA)!!!");
+            }
+        }
+    }
+
+    private TipoDocumento lerTipoDocumento() {
+        while (true) {
+            try {
+                String tipoDocumento = in.next();
+                return TipoDocumento.valueOf(tipoDocumento.toUpperCase());
+            } catch (IllegalArgumentException excecao) {
+                System.out.println(
+                        "!!!Tipo de veículo inválido. Digite uma das opções válidas. (CPF, RG, CNH)!!!");
+            }
+        }
+    }
+
+    private String lerString() {
+        while (true) {
+            try {
+                return in.nextLine();
+            } catch (IllegalArgumentException excecao) {
+                in.nextLine();
+                System.out.println("!!!Digite uma opção válida!!!");
+            }
+        }
+    }
+
+    private long lerLong() {
+        while (true) {
+            try {
+                return in.nextLong();
+            } catch (IllegalArgumentException excecao) {
+                in.nextLine();
+                System.out.println("!!!Digite uma valor válido!!!");
             }
         }
     }

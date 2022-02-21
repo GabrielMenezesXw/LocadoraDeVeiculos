@@ -2,13 +2,14 @@ package br.com.fundatec.locadoraveiculo.model;
 
 public class Endereco {
     String logradouro;
-    int numero;
+    long numero;
     String complemento;
     String bairro;
     String cidade;
     String uf;
     long cep;
-    public Endereco(String logradouro, int numero, String complemento, String bairro, String cidade, String uf, long cep) {
+    
+    public Endereco(String logradouro, long numero, String complemento, String bairro, String cidade, String uf, long cep) {
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
@@ -23,10 +24,10 @@ public class Endereco {
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
     }
-    public int getNumero() {
+    public long getNumero() {
         return numero;
     }
-    public void setNumero(int numero) {
+    public void setNumero(long numero) {
         this.numero = numero;
     }
     public String getComplemento() {
@@ -58,12 +59,12 @@ public class Endereco {
     }
     public void setCep(long cep) {
         this.cep = cep;
-    }
+    }   
 
     @Override
     public String toString() {
         return "Endereco [ cidade= " + cidade + "bairro= " + bairro + ", cep= " + cep + ", complemento= " + complemento + ", logradouro= "
                 + logradouro + ", numero= " + numero + ", uf= " + uf + "]";
     }
-    
+       
 }

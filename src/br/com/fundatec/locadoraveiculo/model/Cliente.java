@@ -9,10 +9,10 @@ public class Cliente {
     private long documento;
     private TipoDocumento tipoDocumento;
     private String razaoSocial;
-    private Long cnpj;
+    private long cnpj;
     private Endereco endereco;
 
-    public Cliente(String nome, Long documento, TipoDocumento tipoDocumento, Endereco endereco) {
+    public Cliente(String nome, long documento, TipoDocumento tipoDocumento, Endereco endereco) {
         this.tipoPessoa = TipoPessoa.FISICA;
         this.nome = nome;
         this.documento = documento;
@@ -20,7 +20,7 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public Cliente(String razaoSocial, Long cnpj, Endereco endereco) {
+    public Cliente(String razaoSocial, long cnpj, Endereco endereco) {
         this.tipoPessoa = TipoPessoa.JURIDICA;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;

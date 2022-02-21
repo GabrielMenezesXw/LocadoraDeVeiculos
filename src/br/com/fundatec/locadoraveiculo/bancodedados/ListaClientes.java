@@ -28,7 +28,7 @@ public class ListaClientes {
         return clientes;
     }
 
-    public Cliente getClienteId(int i) {
-        return clientes.get(i);
+    public Cliente getClienteId(int cliente) {
+        return clientes.get(cliente);
     }
 }
