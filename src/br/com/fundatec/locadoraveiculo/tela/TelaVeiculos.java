@@ -48,7 +48,7 @@ public class TelaVeiculos {
     }
 
     private void cadastrarVeiculo() {
-        System.out.println("Digite a placa:");
+        System.out.println("Digite a placa:");        
         String placa =this.lerString();
         System.out.println("Digite a marca:");
         String marca =this.lerString();
@@ -79,7 +79,6 @@ public class TelaVeiculos {
             }
         }
     }
-
     private TipoVeiculo lerTipoVeiculo() {
         while (true) {
             try {
@@ -123,6 +122,7 @@ public class TelaVeiculos {
             }
         }
     }    
+ 
 }
 
    

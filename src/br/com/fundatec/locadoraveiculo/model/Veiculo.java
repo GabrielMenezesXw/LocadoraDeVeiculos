@@ -3,13 +3,13 @@ package br.com.fundatec.locadoraveiculo.model;
 import br.com.fundatec.locadoraveiculo.enums.TipoVeiculo;
 
 public class Veiculo {
-    String placa;
-    String marca;
-    String modelo;
-    TipoVeiculo tipoVeiculo;
-    float kilometragem;
-    double valorKmRodado;
-    double valorDiaria;
+    private String placa;
+    private String marca;
+    private String modelo;
+    private TipoVeiculo tipoVeiculo;
+    private float kilometragem;
+    private double valorKmRodado;
+    private double valorDiaria;
 
     public Veiculo(String placa, String marca, String modelo, TipoVeiculo tipoVeiculo, float kilometragem,
             double valorKmRodado, double valorDiaria) {

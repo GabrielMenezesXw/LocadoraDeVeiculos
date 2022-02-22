@@ -124,4 +124,11 @@ public class TelaLocacoes {
         }
     }
 
+    private void encerrarLocacao(){
+        this.listarLocacoes();
+        System.out.println("Informe a locação que deseja encerrar.");
+        System.out.println("Informe a data de Encerramento da locação");
+        System.out.println("Informe a Kilometragem atual do veículo.");
+    }
+
 }
