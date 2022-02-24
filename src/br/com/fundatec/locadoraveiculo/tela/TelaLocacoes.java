@@ -3,22 +3,27 @@ package br.com.fundatec.locadoraveiculo.tela;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import br.com.fundatec.locadoraveiculo.bancodedados.*;
+import br.com.fundatec.locadoraveiculo.enums.*;
 import br.com.fundatec.locadoraveiculo.model.*;
 
 public class TelaLocacoes {
     private Scanner in = new Scanner(System.in);
     private ListaVeiculos listaVeiculos = ListaVeiculos.criar();
-    // private ListaClientes listaClientes = ListaClientes.criar();
+    private ListaClientes listaClientes = ListaClientes.criar();
+    ListaLocacoes listaLocacao = ListaLocacoes.criar();
 
     public void ImprimirTelaLocacoes() {
-        // ListaLocacoes listaLocacao = ListaLocacoes.criar();
+
         while (true) {
             int opcao = 0;
             System.out.println("|---------Qual tela gostaria de ir---------|");
-            System.out.println("|------Opção 1: Cadastrar Locações---------|");
-            System.out.println("|-----Opção 2: Listar Listar Locações------|");
+            System.out.println("|-------Opção 1: Cadastrar Locações--------|");
+            System.out.println("|-------Opção 2: Encerrar Locações---------|");
+            System.out.println("|--------Opção 3: Listar Locações----------|");
             System.out.println("|---Opção 0: Retornar ao Menu Principal.---|");
             try {
                 opcao = in.nextInt();
@@ -33,6 +38,10 @@ public class TelaLocacoes {
                     cadastrarLocacao();
                     break;
                 case 2:
+                    System.out.println("Encerrar de Locações");
+                    encerrarLocacao();
+                    break;
+                case 3:
                     System.out.println("Lista de Locações");
                     listarLocacoes();
                     break;
@@ -40,19 +49,19 @@ public class TelaLocacoes {
                     System.out.println("Retornando ao menu");
                     return;
                 default:
-                    System.out.println("Opção inválida, tente novamente.");
+                    System.err.println("Opção inválida, tente novamente.");
             }
         }
     }
 
-    private Locacao cadastrarLocacao() {
+    private void cadastrarLocacao() {
         Veiculo veiculos = selecionarVeiculo();
         Cliente clientes = selecionarCliente();
         System.out.println("Informe a data de locação. (YYYY-MM-DD)");
-        String dataLocacao = in.nextLine();
-        LocalDate locacaoConvertida = LocalDate.parse(dataLocacao);
-        Locacao locacao = new Locacao(clientes, veiculos, locacaoConvertida);
-        return locacao;
+        LocalDate dataLocacao = this.lerLocalDate();
+        Locacao locacao = new Locacao(clientes, veiculos, dataLocacao);
+        listaLocacao.adicionar(locacao);
+
     }
 
     private Veiculo selecionarVeiculo() {
@@ -78,37 +87,33 @@ public class TelaLocacoes {
             }
         }
         System.out.println("Selecione um veículo.");
-        int veiculo = in.nextInt();
-        listaVeiculos.getVeiculoId(veiculo);
-        return veiculos.get(veiculo);
+        int veiculo = this.lerInt();
+        return listaVeiculos.getVeiculoId(veiculo - 1);
     }
 
     private Cliente selecionarCliente() {
-        ListaClientes listaClientes = ListaClientes.criar();
         List<Cliente> clientes = listaClientes.getClientes();
         if (clientes.isEmpty()) {
             System.out.println("Ainda não foram cadastrados clientes");
         } else {
-            String linha = "%-4s %-7s %-10s %-10s %-6s %-8s %-6s %-6s";
-            System.out.println(
-                    String.format(linha, "Num", "Nome", "Tipo Documento", "Número documento", "CNPJ", "Razão Social",
-                            "Endereço"));
+            String linha = "%-4s %-8s %-30s %-4s %-22s %s";
+            System.out.println(String.format(linha, "Num", "Tipo", "Nome/Razão Social", "Doc", "Num Doc", "Endereco"));
             for (int i = 1; i <= clientes.size(); i++) {
                 Cliente cliente = clientes.get(i - 1);
                 System.out.println(String.format(linha,
                         i,
-                        cliente.getNome(),
-                        cliente.getTipoDocumento(),
-                        cliente.getDocumento(),
-                        cliente.getCnpj(),
-                        cliente.getRazaoSocial(),
+                        cliente.getTipoPessoa(),
+                        TipoPessoa.FISICA.equals(cliente.getTipoPessoa()) ? cliente.getNome()
+                                : cliente.getRazaoSocial(),
+                        TipoPessoa.FISICA.equals(cliente.getTipoPessoa()) ? cliente.getTipoDocumento() : "CNPJ",
+                        cliente.getDocumentoFormatado(),
                         cliente.getEndereco()));
             }
         }
         System.out.println("Indique o cliente que realizará a locação.");
-        int cliente = in.nextInt();
-        listaClientes.getClienteId(cliente);
-        return clientes.get(cliente);
+        int cliente = this.lerInt();
+        System.out.println("Cliente Selecionado com sucesso!!");
+        return listaClientes.getClienteId(cliente - 1);
     }
 
     private void listarLocacoes() {
@@ -122,13 +127,72 @@ public class TelaLocacoes {
                 System.out.println(String.format("(%s) %s", i, locacao));
             }
         }
+
     }
 
-    private void encerrarLocacao(){
-        this.listarLocacoes();
+    private Locacao selecionarLocacoes() {
+        ListaLocacoes listaLocacoes = ListaLocacoes.criar();
+        List<Locacao> locacoes = listaLocacoes.getLocacoes();
+        if (locacoes.isEmpty()) {
+            System.out.println("Ainda não foram cadastrados locacoes");
+        } else {
+            for (int i = 1; i <= locacoes.size(); i++) {
+                Locacao locacao = locacoes.get(i - 1);
+                System.out.println(String.format("(%s) %s", i, locacao));
+            }
+        }
+        System.out.println("Selecione uma Locação.");
+        int locacao = in.nextInt();
+        return listaLocacoes.getLocacaoId(locacao - 1);
+    }
+
+    private void encerrarLocacao() {
         System.out.println("Informe a locação que deseja encerrar.");
-        System.out.println("Informe a data de Encerramento da locação");
-        System.out.println("Informe a Kilometragem atual do veículo.");
+        Locacao locacao = this.selecionarLocacoes();
+        System.out.println("Informe a data de entrega (AAAA-MM-DD).");
+        LocalDate dataEntrega = this.lerLocalDateEntrega();
+        System.out.println("Informe a kilometragem atual do veículo.");
+        Float kmAtual = in.nextFloat();
+        in.nextLine();
+        locacao.encerrar(kmAtual, dataEntrega);
+        BigDecimal custo = locacao.getValor();
+        System.out.println("Valor total da locação = R$ " + custo);
+        return;
     }
 
+    private LocalDate lerLocalDateEntrega() {
+        while (true) {
+            try {
+                String dataEntrega = in.next();
+                return LocalDate.parse(dataEntrega);
+            } catch (DateTimeParseException excecao) {
+                in.nextLine();
+                System.err.println("!!!Digite uma data válida!!!");
+
+            }
+        }
+    }
+
+    private LocalDate lerLocalDate() {
+        while (true) {
+            try {
+                String dataLocacao = in.next();
+                return LocalDate.parse(dataLocacao);
+            } catch (DateTimeParseException excecao) {
+                in.nextLine();
+                System.err.println("!!!Digite uma data válida!!!");
+            }
+        }
+    }
+
+    private int lerInt() {
+        while (true) {
+            try {
+                return in.nextInt();
+            } catch (IllegalArgumentException excecao) {
+                in.nextLine();
+                System.err.println("!!!Digite uma valor válido!!!");
+            }
+        }
+    }
 }

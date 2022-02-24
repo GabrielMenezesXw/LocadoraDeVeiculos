@@ -41,7 +41,7 @@ public class TelaClientes {
                     System.out.println("Retornando ao menu");
                     return;
                 default:
-                    System.out.println("Opção inválida, tente novamente.");
+                    System.err.println("Opção inválida, tente novamente.");
             }
 
         }
@@ -112,14 +112,22 @@ public class TelaClientes {
     }
 
     private void listaClientes() {
-        ListaClientes listaClientes = ListaClientes.criar();
         List<Cliente> clientes = listaClientes.getClientes();
         if (clientes.isEmpty()) {
             System.out.println("Ainda não foram cadastrados clientes");
         } else {
+            String linha = "%-4s %-8s %-30s %-4s %-22s %s";
+            System.out.println(String.format(linha, "Num", "Tipo", "Nome/Razão Social", "Doc", "Num Doc", "Endereco"));
             for (int i = 1; i <= clientes.size(); i++) {
                 Cliente cliente = clientes.get(i - 1);
-                System.out.println(String.format("(%s) %s", i, cliente));
+                System.out.println(String.format(linha,
+                        i,
+                        cliente.getTipoPessoa(),
+                        TipoPessoa.FISICA.equals(cliente.getTipoPessoa()) ? cliente.getNome()
+                                : cliente.getRazaoSocial(),
+                        TipoPessoa.FISICA.equals(cliente.getTipoPessoa()) ? cliente.getTipoDocumento() : "CNPJ",
+                        cliente.getDocumentoFormatado(),
+                        cliente.getEndereco()));
             }
         }
     }
@@ -130,7 +138,7 @@ public class TelaClientes {
                 String tipoPessoa = in.next();
                 return TipoPessoa.valueOf(tipoPessoa.toUpperCase());
             } catch (IllegalArgumentException excecao) {
-                System.out.println(
+                System.err.println(
                         "!!!Tipo de veículo inválido. Digite uma das opções válidas. (FISICA, JURIDICA)!!!");
             }
         }
@@ -142,7 +150,7 @@ public class TelaClientes {
                 String tipoDocumento = in.next();
                 return TipoDocumento.valueOf(tipoDocumento.toUpperCase());
             } catch (IllegalArgumentException excecao) {
-                System.out.println(
+                System.err.println(
                         "!!!Tipo de veículo inválido. Digite uma das opções válidas. (CPF, RG, CNH)!!!");
             }
         }
@@ -154,28 +162,29 @@ public class TelaClientes {
                 return in.nextLine();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
-                System.out.println("!!!Digite uma opção válida!!!");
+                System.err.println("!!!Digite uma opção válida!!!");
             }
         }
     }
 
-    private long lerLong() {
+    private Long lerLong() {
         while (true) {
             try {
                 return in.nextLong();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
-                System.out.println("!!!Digite uma valor válido!!!");
+                System.err.println("!!!Digite uma valor válido!!!");
             }
         }
     }
+
     private int lerInt() {
         while (true) {
             try {
                 return in.nextInt();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
-                System.out.println("!!!Digite uma valor válido!!!");
+                System.err.println("!!!Digite uma valor válido!!!");
             }
         }
     }

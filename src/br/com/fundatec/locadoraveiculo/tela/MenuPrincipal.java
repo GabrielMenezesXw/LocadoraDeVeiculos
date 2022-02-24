@@ -43,7 +43,7 @@ public class MenuPrincipal {
                     return;
                 default:
                     System.out.println("Opcão inválida, tente novamente.");
-            }            
-        }        
+            }
+        }
     }
 }

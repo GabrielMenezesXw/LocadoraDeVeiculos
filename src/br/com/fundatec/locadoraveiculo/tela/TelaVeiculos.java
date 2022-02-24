@@ -42,18 +42,18 @@ public class TelaVeiculos {
                     menu.ImprimirMenu();
                     return;
                 default:
-                    System.out.println("Opção inválida, tente novamente.");
+                    System.err.println("Opção inválida, tente novamente.");
             }
         }
     }
 
     private void cadastrarVeiculo() {
-        System.out.println("Digite a placa:");        
-        String placa =this.lerString();
+        System.out.println("Digite a placa:");
+        String placa = this.lerString();
         System.out.println("Digite a marca:");
-        String marca =this.lerString();
+        String marca = this.lerString();
         System.out.println("Digite o modelo:");
-        String modelo =this.lerString();
+        String modelo = this.lerString();
         System.out.println("Informe o Tipo de veículo. Digite uma das opções: HATCH, SEDAN, SUV, PICKUP");
         TipoVeiculo tipoVeiculo = this.lerTipoVeiculo();
         System.out.println("Digite a kilometragem:");
@@ -68,28 +68,39 @@ public class TelaVeiculos {
     }
 
     private void listaVeiculos() {
-        ListaVeiculos listaVeiculos = ListaVeiculos.criar();
         List<Veiculo> veiculos = listaVeiculos.getVeiculos();
         if (veiculos.isEmpty()) {
             System.out.println("Ainda não foram cadastrados Veiculos");
         } else {
+            String linha = "%-4s %-7s %-10s %-10s %-6s %-8s %-6s %-6s";
+            System.out.println(
+                    String.format(linha, "Num", "Placa", "Marca", "Modelo", "Tipo", "Km", "Valor Km", "Valor Diária"));
             for (int i = 1; i <= veiculos.size(); i++) {
                 Veiculo veiculo = veiculos.get(i - 1);
-                System.out.println(String.format("(%s) %s", i, veiculo));
+                System.out.println(String.format(linha,
+                        i,
+                        veiculo.getPlaca(),
+                        veiculo.getMarca(),
+                        veiculo.getModelo(),
+                        veiculo.getTipoVeiculo(),
+                        veiculo.getKilometragem(),
+                        veiculo.getValorKmRodado(),
+                        veiculo.getValorDiaria()));
             }
         }
     }
+
     private TipoVeiculo lerTipoVeiculo() {
         while (true) {
             try {
-                 String tipoVeiculo = in.next();
+                String tipoVeiculo = in.next();
                 return TipoVeiculo.valueOf(tipoVeiculo.toUpperCase());
             } catch (IllegalArgumentException excecao) {
-                System.out.println(
+                System.err.println(
                         "!!!Tipo de veículo inválido. Digite uma das opções válidas. (HATCH, SEDAN, SUV, PICKUP)!!!");
             }
         }
-    }  
+    }
 
     private double lerDouble() {
         while (true) {
@@ -97,32 +108,30 @@ public class TelaVeiculos {
                 return in.nextDouble();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
-                System.out.println("!!!Digite um valor válido!!!");
+                System.err.println("!!!Digite um valor válido!!!");
             }
         }
     }
 
-    private String lerString(){
+    private String lerString() {
         while (true) {
             try {
                 return in.next();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
-                System.out.println("!!!Digite uma opção válida!!!");
+                System.err.println("!!!Digite uma opção válida!!!");
             }
         }
     }
-    private float lerFloat(){
+
+    private float lerFloat() {
         while (true) {
             try {
                 return in.nextFloat();
             } catch (IllegalArgumentException excecao) {
                 in.nextLine();
-                System.out.println("!!!Digite uma valor válido!!!");
+                System.err.println("!!!Digite uma valor válido!!!");
             }
         }
-    }    
- 
+    }
 }
-
-   
