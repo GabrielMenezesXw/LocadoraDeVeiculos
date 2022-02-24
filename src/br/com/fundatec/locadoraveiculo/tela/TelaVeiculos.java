@@ -17,7 +17,7 @@ public class TelaVeiculos {
             int opcao = 0;
             System.out.println("|---------Qual tela gostaria de ir----------|");
             System.out.println("|--------Opção 1: Cadastrar Veículo---------|");
-            System.out.println("|------Opção 2: Listar Listar Veículos------|");
+            System.out.println("|----------Opção 2: Listar Veículos---------|");
             System.out.println("|----Opção 0: Retornar ao Menu Principal----|");
 
             try {

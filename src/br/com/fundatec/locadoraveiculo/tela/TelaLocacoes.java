@@ -149,6 +149,9 @@ public class TelaLocacoes {
     private void encerrarLocacao() {
         System.out.println("Informe a locação que deseja encerrar.");
         Locacao locacao = this.selecionarLocacoes();
+        if(locacao.getSituacao() == SituacaoLocacao.ENCERRADA){
+            System.out.println("A locação em questão já foi cancelada");
+        }else{
         System.out.println("Informe a data de entrega (AAAA-MM-DD).");
         LocalDate dataEntrega = this.lerLocalDateEntrega();
         System.out.println("Informe a kilometragem atual do veículo.");
@@ -158,6 +161,7 @@ public class TelaLocacoes {
         BigDecimal custo = locacao.getValor();
         System.out.println("Valor total da locação = R$ " + custo);
         return;
+        }
     }
 
     private LocalDate lerLocalDateEntrega() {
